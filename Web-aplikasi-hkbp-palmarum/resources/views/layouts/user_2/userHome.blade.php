@@ -20,6 +20,7 @@
     {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
 </head>
 <body>
+
   <div id="loading-indicator">
     <img src="{{asset('Style')}}/image/loading2.gif" alt="Loading..." />
   </div>
@@ -205,11 +206,15 @@
           <div class="schedule-slider">
             @foreach($kegiatans as $data)
             <div class="schedule-item">
-              <h2><center>{{$data['nama_jenis_kegiatan']}}</center></h2>
-              <p>tanggal : {{$data['tanggal_kegiatan']}}</p>
-              <p>waktu : {{$data['waktu_kegiatan']}}</p>
-              <p>Lokasi : {{$data['lokasi_kegiatan']}}</p>
-              <p>deskripsi : {{$data['keterangan']}}</p>
+            <h2>{{ isset($data['nama_jenis_kegiatan']) ? $data['nama_jenis_kegiatan'] : 'Nama Kegiatan Tidak Tersedia' }}</h2>
+              
+              <p>tanggal : {{isset($data['tanggal_kegiatan'])? $data['tanggal_kegiatan'] : 'tanggal kegiatan ga ada'}}</p>
+              
+              <p>waktu : {{isset($data['waktu_kegiatan'])? $data['waktu_kegiatan'] : 'waktu_kegiatanga ada'}}</p>
+        
+              <p>Lokasi : {{isset($data['lokasi_kegiatan'])? $data['lokasi_kegiatan'] : 'lokasi_kegiatan ga ada'}}</p>
+              
+              <p>deskripsi : {{isset($data['keterangan'])? $data['keterangan'] : 'keterangan ga ada'}}</p>
             </div>
             @endforeach
         </div>
@@ -302,16 +307,22 @@
 
 
 
-//foto js
+
 const photos = [
   @foreach($pelayans as $data)
   {
     url: '{{ asset('Style/image/')}}/{{$data['photo']}}',
-    descriptions: ['{{$data['nama_lengkap']}}', 'Jabatan : {{$data['jabatan']}}', 'Tanggal Tahbisan : {{$data['tanggal_tahbisan']}}', '{{$data['keterangan']}}']
+    descriptions: [
+      '{{ isset($data['nama_lengkap']) ? $data['nama_lengkap'] : "Nama Tidak Tersedia" }}',
+      'Jabatan : {{$data['jabatan']}}',
+      'Tanggal Tahbisan : {{$data['tanggal_tahbisan']}}',
+      '{{$data['keterangan']}}'
+    ]
   },
   @endforeach
-  // Tambahkan objek lain di sini jika diperlukan
+
 ];
+
 
 const photoGallery = document.getElementById("photoGallery");
 
